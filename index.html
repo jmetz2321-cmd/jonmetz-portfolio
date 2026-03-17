@@ -29,7 +29,7 @@
 
   <!-- Navigation -->
   <nav class="fixed top-0 w-full z-50 nav-blur border-b border-white/[0.04]">
-    <div class="max-w-6xl mx-auto h-16 flex items-center justify-between pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
+    <div class="site-container h-16 flex items-center justify-between">
       <a href="#" class="text-lg font-bold tracking-tight">Jon Metz</a>
       <div class="hidden md:flex items-center gap-8">
         <a href="#impact" class="nav-link text-sm text-stone-400 hover:text-stone-100 transition-colors">Impact</a>
@@ -42,7 +42,7 @@
     </div>
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden hidden border-t border-white/[0.04] bg-surface-950/95 nav-blur">
-      <div class="py-4 flex flex-col gap-4 pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
+      <div class="site-container py-4 flex flex-col gap-4">
         <a href="#impact" class="mobile-link text-sm text-stone-400 hover:text-stone-100 transition-colors py-3">Impact</a>
         <a href="#coaching" class="mobile-link text-sm text-stone-400 hover:text-stone-100 transition-colors py-3">Coaching</a>
         <a href="https://calendly.com/jmetz2321/30min" target="_blank" rel="noopener" class="text-sm text-accent-400 font-medium py-3">Book a Call &rarr;</a>
@@ -50,28 +50,26 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="min-h-screen flex items-start md:items-center relative overflow-hidden">
+  <!-- Hero: single column, same left edge as Impact & Coaching -->
+  <section class="min-h-screen relative overflow-hidden md:flex md:items-center">
     <div class="hero-glow"></div>
     <div class="hero-glow-warm"></div>
-    <div class="max-w-6xl mx-auto pt-24 pb-16 w-full text-left relative z-10 pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
-      <div class="reveal flex flex-col sm:flex-row sm:items-start gap-8 mb-4 w-full items-stretch">
-        <div class="order-2 sm:order-1 headshot-wrapper flex-shrink-0 self-start sm:self-auto">
-          <img src="headshot.png" alt="Jon Metz" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover object-top border-2 border-white/[0.07] shadow-2xl">
-        </div>
-        <div class="order-1 sm:order-2 w-full min-w-0 sm:flex-1 sm:max-w-none">
-          <p class="text-accent-400 text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">Principal Product Manager</p>
-          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
-            Jon Metz
-          </h1>
-          <p class="text-xl sm:text-2xl text-stone-400 max-w-2xl leading-relaxed">
-            14+ years leading global product at <span class="text-white font-medium">Nike</span>, <span class="text-white font-medium">Expedia</span> &amp; <span class="text-white font-medium">Boeing</span> &mdash; from cart &amp; checkout to AI/ML at global scale. I help product managers and founders ship AI products.
-          </p>
-        </div>
+    <div class="site-container pt-24 pb-16 w-full text-left relative z-10 md:py-24">
+      <div class="reveal mb-8 w-full">
+        <p class="text-accent-400 text-sm font-semibold tracking-widest uppercase mb-3">Principal Product Manager</p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
+          Jon Metz
+        </h1>
+        <p class="text-xl sm:text-2xl text-stone-400 max-w-2xl leading-relaxed">
+          14+ years leading global product at <span class="text-white font-medium">Nike</span>, <span class="text-white font-medium">Expedia</span> &amp; <span class="text-white font-medium">Boeing</span> &mdash; from cart &amp; checkout to AI/ML at global scale. I help product managers and founders ship AI products.
+        </p>
+      </div>
+      <div class="reveal headshot-wrapper mb-10 w-fit">
+        <img src="headshot.png" alt="Jon Metz" class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover object-top border-2 border-white/[0.07] shadow-2xl">
       </div>
 
       <!-- Stats -->
-      <div class="reveal reveal-delay-1 grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-3xl">
+      <div class="reveal reveal-delay-1 grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 w-full">
         <div class="stat-card border border-white/[0.07] rounded-2xl p-6">
           <p class="text-3xl sm:text-4xl font-bold text-white">$1.5B+</p>
           <p class="text-sm text-stone-500 mt-1">Revenue Driven (Nike + Expedia + Boeing)</p>
@@ -106,7 +104,7 @@
 
   <!-- Business Cases / Impact -->
   <section id="impact" class="py-24 sm:py-32 section-elevated">
-    <div class="max-w-6xl mx-auto pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
+    <div class="site-container">
       <div class="reveal mb-16">
         <p class="text-accent-400 text-sm font-semibold tracking-widest uppercase mb-3">Business Impact</p>
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Built products. Moved metrics.</h2>
@@ -195,7 +193,7 @@
 
   <!-- AI Coaching -->
   <section id="coaching" class="py-24 sm:py-32 border-t border-white/[0.04]">
-    <div class="max-w-6xl mx-auto pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
+    <div class="site-container">
       <div class="reveal mb-16">
         <p class="text-accent-400 text-sm font-semibold tracking-widest uppercase mb-3">AI Coaching</p>
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Learn how to use AI agents to scale and accelerate your business.</h2>
@@ -297,7 +295,7 @@
 
   <!-- Footer -->
   <footer class="border-t border-white/[0.04] py-16">
-    <div class="max-w-6xl mx-auto pl-[max(1.5rem,env(safe-area-inset-left))] pr-[max(1.5rem,env(safe-area-inset-right))]">
+    <div class="site-container">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div>
           <p class="text-lg font-bold mb-1">Jon Metz</p>
