@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup & Deploy Guide — jonmetz-portfolio</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #121212;
+      --text: #e5e5e5;
+      --muted: #a3a3a3;
+      --accent: #34d399;
+      --code-bg: #111827;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2.5rem 1.5rem 3rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, rgba(52,211,153,0.18), transparent 55%), var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(12,12,12,0.9);
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.25);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,0.9),
+        0 0 40px rgba(52,211,153,0.18);
+      padding: 2.25rem 1.75rem 2.5rem;
+    }
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.3rem; border-bottom: 1px solid rgba(148,163,184,0.4); padding-bottom: 0.35rem; }
+    h3 { font-size: 1.05rem; color: var(--accent); margin-top: 1.4rem; }
+    p {
+      line-height: 1.6;
+      margin: 0.4rem 0 0.6rem;
+      color: var(--muted);
+    }
+    ul, ol {
+      margin: 0.25rem 0 0.75rem 1.4rem;
+      padding-left: 0.3rem;
+      color: var(--muted);
+    }
+    li { margin: 0.25rem 0; }
+    code {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, "SF Mono", monospace;
+      font-size: 0.88rem;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+    pre {
+      background: var(--code-bg);
+      border-radius: 10px;
+      padding: 0.9rem 0.95rem;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      border: 1px solid rgba(30,64,175,0.5);
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    header {
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(148,163,184,0.4);
+      padding-bottom: 0.75rem;
+    }
+    header p {
+      margin-top: 0.35rem;
+      font-size: 0.9rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.08rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.4);
+      color: var(--accent);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="pill">Guide</div>
+      <h1>Setup &amp; Deploy — <code>jonmetz-portfolio</code></h1>
+      <p>
+        This is the HTML version of <code>SETUP-AND-DEPLOY.md</code>, explaining how this site was created in Cursor and how to run, edit, and deploy it via GitHub Pages.
+      </p>
+      <p>
+        Live site: <a href="https://jmetz2321-cmd.github.io/jonmetz-portfolio/" target="_blank" rel="noopener">https://jmetz2321-cmd.github.io/jonmetz-portfolio/</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>How this site was originally created (Cursor-first workflow)</h2>
+      <p>Before this repo existed, the site was built iteratively in Cursor with the following high-level steps:</p>
+      <ol>
+        <li>
+          <strong>Start from a prompt and empty folder</strong>
+          <ul>
+            <li>Opened a new workspace (<code>portfolio/</code>) in Cursor.</li>
+            <li>Prompted Cursor to create a <strong>single-page portfolio website</strong> with:
+              <ul>
+                <li><code>index.html</code> for structure and content.</li>
+                <li><code>styles.css</code> for custom styling layered on top of Tailwind via CDN.</li>
+                <li><code>script.js</code> for scroll animations, stat counters, and mobile nav.</li>
+              </ul>
+            </li>
+            <li>Used additional prompts to shape the design (hero, case studies, AI coaching section, colors, glows, dark theme).</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Iteratively refine content and layout in Cursor</strong>
+          <ul>
+            <li>Edited <code>index.html</code> many times via natural-language instructions in Cursor:
+              <ul>
+                <li>Added and removed sections (Experience, Testimonials, Patents &amp; Awards).</li>
+                <li>Introduced the <strong>AI Coaching</strong> section (Leland Supercoach, 4.9/5.0 rating, bullets, testimonials).</li>
+                <li>Updated hero copy (companies, revenue stat, “How I Use AI” GitHub CTA).</li>
+                <li>Simplified coaching bullets and steps after multiple <code>/debate</code> panels (PM, UX, EM, AI Analyst).</li>
+              </ul>
+            </li>
+            <li>Adjusted <code>styles.css</code> for:
+              <ul>
+                <li>A warm dark theme, hero glows, noise overlay, and glassmorphic cards.</li>
+                <li>Mobile responsiveness (font sizes, padding, flex-wrap, safe-area insets).</li>
+                <li>Accessibility (focus-visible outlines, <code>prefers-reduced-motion</code> support).</li>
+              </ul>
+            </li>
+            <li>Updated <code>script.js</code> to:
+              <ul>
+                <li>Remove an experimental testimonial carousel.</li>
+                <li>Gate stat animations behind <code>prefers-reduced-motion</code>.</li>
+                <li>Handle nav highlighting and mobile menu toggling.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Use Cursor’s browser + local server to preview</strong>
+          <ul>
+            <li>Ran <code>python3 -m http.server 8765</code> from <code>portfolio/</code>.</li>
+            <li>Used Cursor’s integrated browser (and later, a real phone) to:
+              <ul>
+                <li>Inspect mobile layout, safe-areas, and tap targets.</li>
+                <li>Debug hero alignment and centered vs. left-aligned content.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Sync content to a markdown source of truth</strong>
+          <ul>
+            <li>Maintained <code>WEBSITE-CONTENT.md</code> as a text source for hero copy, case study summaries, AI coaching bullets, testimonials, and CTAs.</li>
+            <li>Periodically synced <code>index.html</code> to match <code>WEBSITE-CONTENT.md</code> (and vice versa).</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Create a Git repo and push to GitHub</strong>
+          <ul>
+            <li>Initialized git in the local folder and committed the site files.</li>
+            <li>Created the GitHub repo <code>jonmetz-portfolio</code> and pushed <code>main</code>.</li>
+            <li>Later cloned that repo into a clean workspace and copied the final <code>portfolio/</code> files into it so GitHub Pages could serve from the repo root.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Enable GitHub Pages and treat <code>main</code> as production</strong>
+          <ul>
+            <li>Enabled GitHub Pages for <code>jonmetz-portfolio</code> (source: <code>main</code>, folder: <code>/</code>).</li>
+            <li>From then on, the workflow became:
+              <ul>
+                <li>Edit in Cursor → preview locally → <code>git add</code> → <code>git commit</code> → <code>git push</code>.</li>
+                <li>Wait 1–3 minutes for GitHub Pages to redeploy.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <p>The remaining sections mirror the markdown guide and describe how to reproduce and extend this setup starting from the cloned repo.</p>
+    </section>
+
+    <section>
+      <h2>1. Prerequisites</h2>
+      <ul>
+        <li><strong>Accounts</strong>
+          <ul>
+            <li>GitHub account (with SSH or HTTPS access configured).</li>
+          </ul>
+        </li>
+        <li><strong>Local tools</strong>
+          <ul>
+            <li><code>git</code> installed (<code>git --version</code>)</li>
+            <li>Python 3 (<code>python3 --version</code>) for a simple local server</li>
+            <li>Cursor IDE installed and configured</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Clone the repository</h2>
+      <p>From a terminal on your machine:</p>
+      <pre><code>cd "/Users/&lt;your-username&gt;/Documents"    # or any workspace directory you prefer
+
+# Clone via SSH (recommended)
+git clone git@github.com:jmetz2321-cmd/jonmetz-portfolio.git
+
+cd jonmetz-portfolio</code></pre>
+      <p>You should now see:</p>
+      <pre><code>ls
+# README.md
+# SETUP-AND-DEPLOY.md
+# WEBSITE-CONTENT.md
+# favicon.svg
+# headshot.png
+# index.html
+# script.js
+# styles.css</code></pre>
+    </section>
+
+    <section>
+      <h2>3. Open the project in Cursor</h2>
+      <ol>
+        <li>Open Cursor.</li>
+        <li>Use <strong>File → Open Folder…</strong>.</li>
+        <li>Select the <code>jonmetz-portfolio</code> folder you just cloned.</li>
+        <li>Cursor will index the folder and show:
+          <ul>
+            <li><code>index.html</code> (structure + content)</li>
+            <li><code>styles.css</code> (custom styling)</li>
+            <li><code>script.js</code> (scroll reveal, nav, stat animations)</li>
+            <li><code>WEBSITE-CONTENT.md</code> (content reference)</li>
+          </ul>
+        </li>
+      </ol>
+      <p>You can now use Cursor chat and inline tools to edit files.</p>
+    </section>
+
+    <section>
+      <h2>4. Run a local preview server</h2>
+      <p>From a terminal in the repo folder:</p>
+      <pre><code>cd "/Users/&lt;your-username&gt;/Documents/jonmetz-portfolio"
+python3 -m http.server 8765</code></pre>
+      <p>Then:</p>
+      <ul>
+        <li>Open <code>http://localhost:8765/</code> in your desktop browser to preview.</li>
+        <li>To test on a phone on the same Wi‑Fi:
+          <ul>
+            <li>Find your Mac’s IP address (e.g. <code>192.168.1.10</code>).</li>
+            <li>Open <code>http://192.168.1.10:8765/</code> in Safari/Chrome on your device.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Stop the server with <code>Ctrl+C</code> in the terminal when finished.</p>
+    </section>
+
+    <section>
+      <h2>5. Editing the site in Cursor</h2>
+      <h3>5.1 HTML (<code>index.html</code>)</h3>
+      <ul>
+        <li><strong>Hero &amp; copy</strong>: Edit the main content, stats, and CTAs.</li>
+        <li><strong>Business Impact</strong>: Update case study text, metrics, and labels.</li>
+        <li><strong>AI Coaching</strong>: Adjust headline, bullets, testimonials, and Calendly URL.</li>
+      </ul>
+      <p>All sections are wrapped in a shared <code>site-container</code> class so they stay aligned and responsive; keep new sections inside <code>&lt;div class="site-container"&gt;</code> for consistent layout.</p>
+
+      <h3>5.2 CSS (<code>styles.css</code>)</h3>
+      <ul>
+        <li>Global colors, glows, and noise overlay are defined at the top.</li>
+        <li><code>.site-container</code> controls consistent max-width and gutters across sections.</li>
+        <li>Media queries and utility classes handle mobile tweaks (e.g. centering, safe-area).</li>
+      </ul>
+      <p>Make small, intentional changes and verify them locally in the browser before committing.</p>
+
+      <h3>5.3 JavaScript (<code>script.js</code>)</h3>
+      <ul>
+        <li>Handles:
+          <ul>
+            <li>Scroll reveal animations via <code>IntersectionObserver</code>.</li>
+            <li>Stat counter animation (respecting <code>prefers-reduced-motion</code>).</li>
+            <li>Mobile menu toggle and active nav links.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Only change JS if you want to modify these behaviors.</p>
+    </section>
+
+    <section>
+      <h2>6. Committing changes with git</h2>
+      <p>After you’ve edited files in Cursor and verified them locally:</p>
+      <pre><code>cd "/Users/&lt;your-username&gt;/Documents/jonmetz-portfolio"
+
+# See what changed
+git status
+
+# Stage files (example: HTML + CSS + JS)
+git add index.html styles.css script.js
+
+# Commit with a clear message
+git commit -m "Describe the change, e.g. update coaching copy and hero layout"</code></pre>
+      <p>If you accidentally staged unwanted files, you can unstage with:</p>
+      <pre><code>git restore --staged &lt;file&gt;</code></pre>
+    </section>
+
+    <section>
+      <h2>7. Push to GitHub</h2>
+      <p>Once you have a commit:</p>
+      <pre><code>git push</code></pre>
+      <p>If this is the first push from your machine, Git may prompt you to authenticate (via browser or Personal Access Token). After that, subsequent pushes should be automatic.</p>
+      <p>Your changes are now in the <code>main</code> branch of the GitHub repo <code>jmetz2321-cmd/jonmetz-portfolio</code>.</p>
+    </section>
+
+    <section>
+      <h2>8. Configure GitHub Pages (one-time)</h2>
+      <p>This repo is designed to deploy via <strong>GitHub Pages</strong> as a project site.</p>
+      <ol>
+        <li>Go to the repository on GitHub:
+          <ul>
+            <li><code>https://github.com/jmetz2321-cmd/jonmetz-portfolio</code></li>
+          </ul>
+        </li>
+        <li>Click <strong>Settings</strong>.</li>
+        <li>In the left sidebar, choose <strong>Pages</strong>.</li>
+        <li>Under <strong>Source</strong>:
+          <ul>
+            <li>Select <code>Deploy from a branch</code>.</li>
+            <li>Branch: <code>main</code>.</li>
+            <li>Folder: <code>/ (root)</code>.</li>
+          </ul>
+        </li>
+        <li>Click <strong>Save</strong>.</li>
+      </ol>
+      <p>After 1–3 minutes, GitHub will expose:</p>
+      <ul>
+        <li><code>https://jmetz2321-cmd.github.io/jonmetz-portfolio/</code></li>
+      </ul>
+      <p>The Pages settings page will show the exact URL and deployment status.</p>
+    </section>
+
+    <section>
+      <h2>9. Updating the live site</h2>
+      <p>Once GitHub Pages is configured, the deployment pipeline is:</p>
+      <ol>
+        <li><strong>Edit in Cursor</strong> (HTML/CSS/JS).</li>
+        <li><strong>Preview locally</strong> at <code>http://localhost:8765/</code>.</li>
+        <li><strong>Commit and push</strong> to <code>main</code>:
+          <pre><code>git add .
+git commit -m "Short description of change"
+git push</code></pre>
+        </li>
+        <li>Wait ~1–3 minutes.</li>
+        <li>Visit:
+          <ul>
+            <li><code>https://jmetz2321-cmd.github.io/jonmetz-portfolio/</code></li>
+            <li>On mobile, if it looks cached, use a private/incognito tab or add a cache-buster like <code>?v=2</code>:
+              <ul>
+                <li><code>https://jmetz2321-cmd.github.io/jonmetz-portfolio/?v=2</code></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>10. Optional: Use as your root GitHub Pages site</h2>
+      <p>If you want this portfolio at:</p>
+      <ul>
+        <li><code>https://jmetz2321-cmd.github.io</code></li>
+      </ul>
+      <p>You must use the special user-site repo name:</p>
+      <ol>
+        <li>Create or use a repo named <strong><code>jmetz2321-cmd.github.io</code></strong>.</li>
+        <li>Copy the contents of <code>jonmetz-portfolio</code> into that repo’s root (same file layout).</li>
+        <li>Enable Pages for that repo with:
+          <ul>
+            <li>Branch: <code>main</code></li>
+            <li>Folder: <code>/ (root)</code></li>
+          </ul>
+        </li>
+      </ol>
+      <p>Then your root user URL will serve this site, and <code>jonmetz-portfolio</code> can remain as the code/source repo or as a separate project site.</p>
+    </section>
+
+    <section>
+      <h2>11. Recommended workflow summary</h2>
+      <ol>
+        <li>Clone repo and open in Cursor.</li>
+        <li>Run <code>python3 -m http.server 8765</code> to preview locally.</li>
+        <li>Make changes to <code>index.html</code>, <code>styles.css</code>, <code>script.js</code> as needed.</li>
+        <li>Verify changes in the browser (desktop + mobile, or using your phone over Wi‑Fi).</li>
+        <li>Commit and push to <code>main</code>.</li>
+        <li>Wait a couple minutes for GitHub Pages to redeploy.</li>
+        <li>Validate the live site at <code>https://jmetz2321-cmd.github.io/jonmetz-portfolio/</code>.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
+
