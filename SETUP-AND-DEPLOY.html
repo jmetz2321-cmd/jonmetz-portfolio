@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build &amp; Deploy a Personal Website with Cursor + GitHub Pages</title>
+  <title>Build a Personal Website with Cursor + GitHub Pages</title>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -108,7 +108,7 @@
   <main>
     <header>
       <div class="pill">Guide</div>
-      <h1>Build &amp; Deploy a Personal Website with Cursor + GitHub Pages</h1>
+      <h1>Build a Personal Website with Cursor + GitHub Pages</h1>
       <p>
         A step-by-step guide to creating a personal website from scratch using <a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a> and deploying it for free with <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a>. No prior web development experience required.
       </p>
@@ -329,10 +329,10 @@ git commit -m "Update hero section and add projects"</code></pre>
       <p>The Pages settings page shows the exact URL and deployment status.</p>
     </section>
 
-    <!-- ── Update Loop ── -->
+    <!-- ── Update Loop (quick) ── -->
     <section>
-      <h2>9. Updating the live site</h2>
-      <p>Once Pages is configured, the deployment loop is:</p>
+      <h2>9. Updating the live site (quick path)</h2>
+      <p>For small, low-risk changes you can push directly to <code>main</code>:</p>
       <ol>
         <li><strong>Edit</strong> in Cursor (HTML / CSS / JS).</li>
         <li><strong>Preview</strong> at <code>http://localhost:8765/</code>.</li>
@@ -346,9 +346,52 @@ git push</code></pre>
       </ol>
     </section>
 
+    <!-- ── Feature Branch + PR Workflow ── -->
+    <section>
+      <h2>10. Recommended: Feature Branch + Pull Request Workflow</h2>
+      <p>For any meaningful update, use a <strong>feature branch</strong> and <strong>pull request</strong> instead of pushing directly to <code>main</code>. This gives you a chance to review the change in GitHub before it goes live — catching mistakes, broken layouts, or copy errors before they reach your audience.</p>
+
+      <h3>Why this matters</h3>
+      <ul>
+        <li><strong>Protects your live site.</strong> Changes on a feature branch don't affect <code>main</code>, so your published site stays stable while you iterate.</li>
+        <li><strong>Enables code review.</strong> The pull request diff shows exactly what changed, making it easy to spot typos, missing files, or unintended edits before merging.</li>
+        <li><strong>Creates a history.</strong> Each PR is a self-contained record of what changed and why, which is valuable if you ever need to revert or understand past decisions.</li>
+      </ul>
+
+      <h3>The steps</h3>
+      <ol>
+        <li><strong>Create a feature branch</strong> before making any edits:
+          <pre><code>git checkout -b feature/my-change</code></pre>
+        </li>
+        <li><strong>Tell Cursor what to change</strong> — describe the edit in plain English (e.g. "Update the hero headline to X" or "Add a Projects section with three cards"). Cursor modifies the code for you.</li>
+        <li><strong>Preview locally</strong> — check the result at <code>http://localhost:8765/</code> on desktop and mobile.</li>
+        <li><strong>Commit and push</strong> to the feature branch (not <code>main</code>):
+          <pre><code>git add .
+git commit -m "feat: describe the change"
+git push -u origin feature/my-change</code></pre>
+        </li>
+        <li><strong>Open a pull request</strong> from <code>feature/my-change</code> → <code>main</code>. You can do this on GitHub or with the GitHub CLI:
+          <pre><code>gh pr create --title "feat: describe the change" --body "Summary of what changed and why." --base main</code></pre>
+        </li>
+        <li><strong>Review the PR</strong> on GitHub — check the diff, verify the changes look correct.</li>
+        <li><strong>Merge the PR</strong> — once you're satisfied, merge it into <code>main</code>. GitHub Pages will automatically rebuild and your site goes live in ~1–3 minutes.</li>
+      </ol>
+
+      <h3>Using Cursor shortcut commands</h3>
+      <p>If your project has Cursor skills configured, the workflow simplifies to:</p>
+      <ol>
+        <li>Create a feature branch: <code>git checkout -b feature/my-change</code></li>
+        <li>Tell Cursor what to change</li>
+        <li>Preview at <code>http://localhost:8765/</code></li>
+        <li><strong><code>/commit</code></strong> — stages, commits, and pushes to the feature branch</li>
+        <li><strong><code>/pr</code></strong> — opens a pull request from the feature branch → <code>main</code></li>
+        <li>Review and merge the PR on GitHub — site deploys automatically</li>
+      </ol>
+    </section>
+
     <!-- ── Root Site ── -->
     <section>
-      <h2>10. Optional: Use as your root GitHub Pages site</h2>
+      <h2>11. Optional: Use as your root GitHub Pages site</h2>
       <p>By default, project sites live at <code>https://&lt;your-username&gt;.github.io/&lt;your-repo&gt;/</code>. If you want the shorter root URL:</p>
       <pre><code>https://&lt;your-username&gt;.github.io</code></pre>
       <p>You need a repo named exactly <strong><code>&lt;your-username&gt;.github.io</code></strong>:</p>
@@ -362,7 +405,7 @@ git push</code></pre>
 
     <!-- ── Summary ── -->
     <section>
-      <h2>11. Workflow summary</h2>
+      <h2>12. Workflow summary</h2>
       <ol>
         <li>Create or clone a repo and open it in Cursor.</li>
         <li>Run <code>python3 -m http.server 8765</code> to preview locally.</li>
@@ -373,6 +416,10 @@ git push</code></pre>
         <li>Visit <code>https://&lt;your-username&gt;.github.io/&lt;your-repo&gt;/</code> and confirm.</li>
       </ol>
     </section>
+
+    <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(148,163,184,0.4); text-align: center; color: var(--muted); font-size: 0.85rem;">
+      &copy; 2026 Jon Metz
+    </footer>
   </main>
 </body>
 </html>

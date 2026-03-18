@@ -1,4 +1,4 @@
-# Build & Deploy a Personal Website with Cursor + GitHub Pages
+# Build a Personal Website with Cursor + GitHub Pages
 
 ## Overview
 
@@ -200,9 +200,9 @@ The Pages settings page shows the exact URL and deployment status.
 
 ---
 
-## 9. Updating the live site
+## 9. Updating the live site (quick path)
 
-Once Pages is configured, the deployment loop is:
+For small, low-risk changes you can push directly to `main`:
 
 1. **Edit** in Cursor (HTML / CSS / JS).
 2. **Preview** at `http://localhost:8765/`.
@@ -217,7 +217,57 @@ Once Pages is configured, the deployment loop is:
 
 ---
 
-## 10. Optional: Use as your root GitHub Pages site
+## 10. Recommended: Feature Branch + Pull Request Workflow
+
+For any meaningful update, use a **feature branch** and **pull request** instead of pushing directly to `main`. This gives you a chance to review the change in GitHub before it goes live — catching mistakes, broken layouts, or copy errors before they reach your audience.
+
+### Why this matters
+
+- **Protects your live site.** Changes on a feature branch don't affect `main`, so your published site stays stable while you iterate.
+- **Enables code review.** The pull request diff shows exactly what changed, making it easy to spot typos, missing files, or unintended edits before merging.
+- **Creates a history.** Each PR is a self-contained record of what changed and why, which is valuable if you ever need to revert or understand past decisions.
+
+### The steps
+
+1. **Create a feature branch** before making any edits:
+   ```bash
+   git checkout -b feature/my-change
+   ```
+
+2. **Tell Cursor what to change** — describe the edit in plain English (e.g. "Update the hero headline to X" or "Add a Projects section with three cards"). Cursor modifies the code for you.
+
+3. **Preview locally** — check the result at `http://localhost:8765/` on desktop and mobile.
+
+4. **Commit and push** to the feature branch (not `main`):
+   ```bash
+   git add .
+   git commit -m "feat: describe the change"
+   git push -u origin feature/my-change
+   ```
+
+5. **Open a pull request** from `feature/my-change` → `main`. You can do this on GitHub or with the GitHub CLI:
+   ```bash
+   gh pr create --title "feat: describe the change" --body "Summary of what changed and why." --base main
+   ```
+
+6. **Review the PR** on GitHub — check the diff, verify the changes look correct.
+
+7. **Merge the PR** — once you're satisfied, merge it into `main`. GitHub Pages will automatically rebuild and your site goes live in ~1–3 minutes.
+
+### Using Cursor shortcut commands
+
+If your project has Cursor skills configured, the workflow simplifies to:
+
+1. Create a feature branch: `git checkout -b feature/my-change`
+2. Tell Cursor what to change
+3. Preview at `http://localhost:8765/`
+4. **`/commit`** — stages, commits, and pushes to the feature branch
+5. **`/pr`** — opens a pull request from the feature branch → `main`
+6. Review and merge the PR on GitHub — site deploys automatically
+
+---
+
+## 11. Optional: Use as your root GitHub Pages site
 
 By default, project sites live at `https://<your-username>.github.io/<your-repo>/`. If you want your site at the shorter root URL:
 
@@ -235,7 +285,7 @@ Your site will then be served at the root domain, and your original project repo
 
 ---
 
-## 11. Workflow summary
+## 12. Workflow summary
 
 1. Create or clone a repo and open it in Cursor.
 2. Run `python3 -m http.server 8765` to preview locally.
@@ -244,3 +294,7 @@ Your site will then be served at the root domain, and your original project repo
 5. `git add . && git commit -m "message" && git push`
 6. Wait ~2 minutes for GitHub Pages to redeploy.
 7. Visit `https://<your-username>.github.io/<your-repo>/` and confirm.
+
+---
+
+© 2026 Jon Metz
