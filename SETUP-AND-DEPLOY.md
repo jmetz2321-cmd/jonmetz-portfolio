@@ -1,102 +1,96 @@
-## How this site was originally created (Cursor-first workflow)
-
-Before this repo existed, the site was built iteratively in Cursor with the following high-level steps:
-
-1. **Start from a prompt and empty folder**
-   - Opened a new workspace (`portfolio/`) in Cursor.
-   - Prompted Cursor to create a **single-page portfolio website** with:
-     - `index.html` for structure and content.
-     - `styles.css` for custom styling layered on top of Tailwind via CDN.
-     - `script.js` for scroll animations, stat counters, and mobile nav.
-   - Used additional prompts to shape the design (hero, case studies, AI coaching section, colors, glows, dark theme).
-
-2. **Iteratively refine content and layout in Cursor**
-   - Edited `index.html` many times via natural-language instructions in Cursor:
-     - Added and removed sections (Experience, Testimonials, Patents & Awards).
-     - Introduced the **AI Coaching** section (Leland Supercoach, 4.9/5.0 rating, bullets, testimonials).
-     - Updated hero copy (companies, revenue stat, “How I Use AI” GitHub CTA).
-     - Simplified coaching bullets and steps after multiple `/debate` panels (PM, UX, EM, AI Analyst).
-   - Adjusted `styles.css` for:
-     - A warm dark theme, hero glows, noise overlay, and glassmorphic cards.
-     - Mobile responsiveness (font sizes, padding, flex-wrap, safe-area insets).
-     - Accessibility (focus-visible outlines, `prefers-reduced-motion` support).
-   - Updated `script.js` to:
-     - Remove an experimental testimonial carousel.
-     - Gate stat animations behind `prefers-reduced-motion`.
-     - Handle nav highlighting and mobile menu toggling.
-
-3. **Use Cursor’s browser + local server to preview**
-   - Ran `python3 -m http.server 8765` from `portfolio/`.
-   - Used Cursor’s integrated browser (and later, a real phone) to:
-     - Inspect mobile layout, safe-areas, and tap targets.
-     - Debug hero alignment and centered vs. left-aligned content.
-
-4. **Sync content to a markdown source of truth**
-   - Maintained `WEBSITE-CONTENT.md` as a text source for:
-     - Hero copy.
-     - Case study summaries and metrics.
-     - AI coaching bullets, testimonials, and calls-to-action.
-   - Periodically synced `index.html` to match `WEBSITE-CONTENT.md` (and vice versa).
-
-5. **Create a Git repo and push to GitHub**
-   - Initialized git in the local folder and committed the site files.
-   - Created the GitHub repo `jonmetz-portfolio` and pushed `main`.
-   - Later cloned that repo into a clean workspace and copied the final `portfolio/` files into it so GitHub Pages could serve from the repo root.
-
-6. **Enable GitHub Pages and treat `main` as production**
-   - Enabled GitHub Pages for `jonmetz-portfolio` (source: `main`, folder: `/`).
-   - From then on, the workflow became:
-     - Edit in Cursor → preview locally → `git add` → `git commit` → `git push`.
-     - Wait 1–3 minutes for GitHub Pages to redeploy.
-
-The rest of this document describes how to reproduce and extend this setup yourself, starting from the cloned repo.
-
----
+# Build & Deploy a Personal Website with Cursor + GitHub Pages
 
 ## Overview
 
-This document explains how to set up, edit, preview, and deploy this portfolio + AI coaching website using Cursor and GitHub Pages.
+This guide walks you through building a personal website from scratch using [Cursor](https://cursor.com) and deploying it for free with [GitHub Pages](https://pages.github.com). No prior web development experience is required — Cursor's AI handles the code while you focus on content and design decisions.
 
-The repo name in the examples is `jonmetz-portfolio`, owned by `jmetz2321-cmd`. Adjust names if you fork or rename.
+By the end you'll have a live website at `https://<your-username>.github.io/<your-repo>/` that you can update by simply pushing to `main`.
+
+---
+
+## The Cursor-First Workflow
+
+Before writing any code yourself, a static site can be built entirely through conversation with Cursor:
+
+1. **Start from a prompt and an empty folder**
+   - Open a new workspace in Cursor (for example, `my-site/`).
+   - Prompt Cursor to create a single-page website with:
+     - `index.html` for structure and content.
+     - `styles.css` for custom styling (optionally using a utility framework like Tailwind via CDN).
+     - `script.js` for interactivity — scroll animations, mobile nav, etc.
+   - Use follow-up prompts to shape the design: hero section, feature highlights, testimonials, color palette, dark/light theme.
+
+2. **Iteratively refine content and layout**
+   - Edit `index.html` via natural-language instructions:
+     - Add, remove, or reorder sections (About, Projects, Experience, Contact, FAQ, etc.).
+     - Refine your headline, value proposition, and calls-to-action.
+   - Adjust `styles.css`:
+     - Dial in your visual theme (colors, typography, spacing, background effects).
+     - Make it responsive (mobile-first media queries, safe-area insets, flex-wrap).
+     - Add accessibility basics (`focus-visible` outlines, `prefers-reduced-motion`).
+   - Update `script.js`:
+     - Add or remove interactive components (scroll reveals, counters, carousels, accordions).
+     - Gate animations behind `prefers-reduced-motion` for accessibility.
+     - Handle mobile menu toggling and active nav-link highlighting.
+
+3. **Preview locally with Cursor's browser**
+   - Run `python3 -m http.server 8765` from the project folder.
+   - Use Cursor's built-in browser or a real device on the same Wi-Fi to check layout, spacing, and tap targets.
+
+4. **(Optional) Keep a markdown content file**
+   - Maintain a file like `CONTENT.md` as a single source of truth for all copy — headlines, bios, project descriptions, testimonials.
+   - Periodically sync `index.html` to match it (and vice versa).
+
+5. **Create a Git repo and push to GitHub**
+   - Initialize git, commit site files, create a GitHub repo, and push `main`.
+   - Make sure the site files (`index.html`, `styles.css`, `script.js`, assets) live at the repo root so GitHub Pages can serve them directly.
+
+6. **Enable GitHub Pages**
+   - Turn on Pages in repo settings (source: `main`, folder: `/`).
+   - From this point on, the workflow is: **edit in Cursor → preview locally → commit → push → live in ~2 minutes**.
 
 ---
 
 ## 1. Prerequisites
 
 - **Accounts**
-  - GitHub account (with SSH or HTTPS access configured).
+  - A [GitHub](https://github.com) account with SSH or HTTPS access configured.
 - **Local tools**
-  - `git` installed (`git --version`)
-  - Python 3 (`python3 --version`) for a simple local server
-  - Cursor IDE installed and configured
+  - `git` — verify with `git --version`
+  - Python 3 — verify with `python3 --version` (used for a simple local server)
+  - [Cursor IDE](https://cursor.com) installed
 
 ---
 
-## 2. Clone the repository
+## 2. Create (or clone) the repository
 
-From a terminal on your machine:
+### Option A: Start from scratch
 
 ```bash
-cd "/Users/<your-username>/Documents"    # or any workspace directory you prefer
-
-# Clone via SSH (recommended)
-git clone git@github.com:jmetz2321-cmd/jonmetz-portfolio.git
-
-cd jonmetz-portfolio
+mkdir my-site && cd my-site
+git init
 ```
 
-You should now see:
+Open the folder in Cursor and start prompting to generate your site files.
+
+### Option B: Clone an existing repo
 
 ```bash
-ls
-# README.md
-# SETUP-AND-DEPLOY.md
-# WEBSITE-CONTENT.md
-# favicon.svg
-# headshot.png
-# index.html
-# script.js
-# styles.css
+git clone git@github.com:<your-username>/<your-repo>.git
+cd <your-repo>
+```
+
+A typical project structure looks like:
+
+```
+<your-repo>/
+├── index.html
+├── styles.css
+├── script.js
+├── favicon.svg
+├── images/
+│   └── (your images here)
+└── README.md
 ```
 
 ---
@@ -104,35 +98,23 @@ ls
 ## 3. Open the project in Cursor
 
 1. Open Cursor.
-2. Use **File → Open Folder…**.
-3. Select the `jonmetz-portfolio` folder you just cloned.
-4. Cursor will index the folder and show:
-   - `index.html` (structure + content)
-   - `styles.css` (custom styling)
-   - `script.js` (scroll reveal, nav, stat animations)
-   - `WEBSITE-CONTENT.md` (content reference)
-
-You can now use the Cursor chat and inline tools to edit files.
+2. **File → Open Folder…** and select your project folder.
+3. Cursor will index the files. You can now use Agent mode or inline edits to modify any file with natural language.
 
 ---
 
 ## 4. Run a local preview server
 
-From a terminal in the repo folder:
+From a terminal inside the project folder:
 
 ```bash
-cd "/Users/<your-username>/Documents/jonmetz-portfolio"
 python3 -m http.server 8765
 ```
 
-Then:
+- **Desktop**: open `http://localhost:8765/` in your browser.
+- **Mobile** (same Wi-Fi): find your computer's local IP (e.g. `192.168.1.42`) and open `http://192.168.1.42:8765/` on your phone.
 
-- Open `http://localhost:8765/` in your desktop browser to preview.
-- To test on a phone on the same Wi‑Fi:
-  - Find your Mac’s IP address (e.g. `192.168.1.10`).
-  - Open `http://192.168.1.10:8765/` in Safari/Chrome on your device.
-
-Stop the server with `Ctrl+C` in the terminal when finished.
+Stop the server with `Ctrl+C` when finished.
 
 ---
 
@@ -140,49 +122,47 @@ Stop the server with `Ctrl+C` in the terminal when finished.
 
 ### 5.1 HTML (`index.html`)
 
-- **Hero & copy**: Edit the main content, stats, and CTAs.
-- **Business Impact**: Update case study text, metrics, and labels.
-- **AI Coaching**: Adjust headline, bullets, testimonials, and Calendly URL.
+- **Hero & headline**: Your name/title, a one-liner about what you do, and a primary CTA.
+- **Core sections**: About, Projects/Work, Skills, Experience, Contact — whatever fits your story.
+- **Social proof**: Testimonials, client logos, ratings, or notable achievements.
 
-All sections are wrapped in a shared `site-container` class so they stay aligned and responsive; keep new sections inside `div.site-container` for consistent layout.
+If your template uses a wrapper class (like `.container` or `.site-container`), keep new sections inside it for consistent alignment.
 
 ### 5.2 CSS (`styles.css`)
 
-- Global colors, glows, and noise overlay are defined at the top.
-- `.site-container` controls consistent max-width and gutters across sections.
-- Media queries and utility classes handle mobile tweaks (e.g. centering, safe-area).
+- Theme variables (colors, fonts) are usually defined at the top in `:root`.
+- A wrapper class controls max-width and horizontal padding across sections.
+- Media queries handle mobile layout, stacking, and safe-area padding.
 
-Make small, intentional changes and verify them locally in the browser before committing.
+Make small changes, verify in the browser, then commit.
 
 ### 5.3 JavaScript (`script.js`)
 
-- Handles:
-  - Scroll reveal animations via `IntersectionObserver`
-  - Stat counter animation (respecting `prefers-reduced-motion`)
-  - Mobile menu toggle and active nav links
+Common behaviors for personal sites:
 
-Only change JS if you want to modify these behaviors.
+- Scroll-reveal animations via `IntersectionObserver`
+- Stat or number counter animations (gated behind `prefers-reduced-motion`)
+- Mobile hamburger menu toggle
+- Active nav-link highlighting on scroll
+
+Only touch JS when you want to change or add interactive behavior.
 
 ---
 
-## 6. Committing changes with git
+## 6. Commit your changes
 
-After you’ve edited files in Cursor and verified them locally:
+After editing and verifying locally:
 
 ```bash
-cd "/Users/<your-username>/Documents/jonmetz-portfolio"
-
-# See what changed
 git status
 
-# Stage files (example: HTML + CSS + JS)
 git add index.html styles.css script.js
+# (add any other changed files)
 
-# Commit with a clear message
-git commit -m "Describe the change, e.g. update coaching copy and hero layout"
+git commit -m "Update hero section and add projects"
 ```
 
-If you accidentally staged unwanted files, you can unstage with:
+To unstage a file you didn't mean to include:
 
 ```bash
 git restore --staged <file>
@@ -192,87 +172,75 @@ git restore --staged <file>
 
 ## 7. Push to GitHub
 
-Once you have a commit:
-
 ```bash
 git push
 ```
 
-If this is the first push from your machine, Git may prompt you to authenticate (via browser or Personal Access Token). After that, subsequent pushes should be automatic.
-
-Your changes are now in the `main` branch of the GitHub repo `jmetz2321-cmd/jonmetz-portfolio`.
+If this is your first push, Git may ask you to authenticate via browser or a Personal Access Token. After that, subsequent pushes are automatic.
 
 ---
 
-## 8. Configure GitHub Pages (one-time)
+## 8. Configure GitHub Pages (one-time setup)
 
-This repo is designed to deploy via **GitHub Pages** as a project site.
+1. Go to your repo on GitHub: `https://github.com/<your-username>/<your-repo>`
+2. Click **Settings** → **Pages** (in the left sidebar).
+3. Under **Source**, select:
+   - `Deploy from a branch`
+   - Branch: `main`
+   - Folder: `/ (root)`
+4. Click **Save**.
 
-1. Go to the repository on GitHub:
-   - `https://github.com/jmetz2321-cmd/jonmetz-portfolio`
-2. Click **Settings**.
-3. In the left sidebar, choose **Pages**.
-4. Under **Source**:
-   - Select `Deploy from a branch`.
-   - Branch: `main`.
-   - Folder: `/ (root)`.
-5. Click **Save**.
+After 1–3 minutes your site will be live at:
 
-After 1–3 minutes, GitHub will expose:
+```
+https://<your-username>.github.io/<your-repo>/
+```
 
-- `https://jmetz2321-cmd.github.io/jonmetz-portfolio/`
-
-The Pages settings page will show the exact URL and deployment status.
+The Pages settings page shows the exact URL and deployment status.
 
 ---
 
 ## 9. Updating the live site
 
-Once GitHub Pages is configured, the deployment pipeline is:
+Once Pages is configured, the deployment loop is:
 
-1. **Edit in Cursor** (HTML/CSS/JS).
-2. **Preview locally** at `http://localhost:8765/`.
-3. **Commit and push** to `main`:
-
+1. **Edit** in Cursor (HTML / CSS / JS).
+2. **Preview** at `http://localhost:8765/`.
+3. **Commit and push**:
    ```bash
    git add .
    git commit -m "Short description of change"
    git push
    ```
-
-4. Wait ~1–3 minutes.
-5. Visit:
-   - `https://jmetz2321-cmd.github.io/jonmetz-portfolio/`
-   - On mobile, if it looks cached, use a private/incognito tab or add a cache-buster like `?v=2`:
-     - `https://jmetz2321-cmd.github.io/jonmetz-portfolio/?v=2`
+4. **Wait** ~1–3 minutes for GitHub Pages to rebuild.
+5. **Visit** your live URL. If it looks cached, use a private/incognito tab or append `?v=2` to the URL.
 
 ---
 
 ## 10. Optional: Use as your root GitHub Pages site
 
-If you want this portfolio at:
+By default, project sites live at `https://<your-username>.github.io/<your-repo>/`. If you want your site at the shorter root URL:
 
-- `https://jmetz2321-cmd.github.io`
+```
+https://<your-username>.github.io
+```
 
-You must use the special user-site repo name:
+You need a repo named exactly **`<your-username>.github.io`**:
 
-1. Create or use a repo named **`jmetz2321-cmd.github.io`**.
-2. Copy the contents of `jonmetz-portfolio` into that repo’s root (same file layout).
-3. Enable Pages for that repo with:
-   - Branch: `main`
-   - Folder: `/ (root)`
+1. Create a repo called `<your-username>.github.io`.
+2. Copy your site files into that repo's root.
+3. Enable Pages (branch: `main`, folder: `/`).
 
-Then your root user URL will serve this site, and `jonmetz-portfolio` can remain as the code/source repo or as a separate project site.
+Your site will then be served at the root domain, and your original project repo can remain as a separate project site.
 
 ---
 
-## 11. Recommended workflow summary
+## 11. Workflow summary
 
-1. Clone repo and open in Cursor.
+1. Create or clone a repo and open it in Cursor.
 2. Run `python3 -m http.server 8765` to preview locally.
-3. Make changes to `index.html`, `styles.css`, `script.js` as needed.
-4. Verify changes in the browser (desktop + mobile, or using your phone over Wi‑Fi).
-5. Commit and push to `main`.
-6. Wait a couple minutes for GitHub Pages to redeploy.
-7. Validate the live site at `https://jmetz2321-cmd.github.io/jonmetz-portfolio/`.
-
+3. Use Cursor to edit `index.html`, `styles.css`, and `script.js` with natural language.
+4. Verify changes in the browser (desktop + mobile).
+5. `git add . && git commit -m "message" && git push`
+6. Wait ~2 minutes for GitHub Pages to redeploy.
+7. Visit `https://<your-username>.github.io/<your-repo>/` and confirm.
