@@ -267,7 +267,141 @@ If your project has Cursor skills configured, the workflow simplifies to:
 
 ---
 
-## 11. Optional: Use as your root GitHub Pages site
+## 11. Setting Up `/commit`, `/pr`, and `/deploy` as Global Skills
+
+The shortcut commands mentioned above (`/commit`, `/pr`, `/deploy`) are powered by **Cursor Skills** — markdown instruction files that teach Cursor reusable workflows. Setting them up once at the **user level** means they work in every project you open, for any repo.
+
+### Prerequisites
+
+- **`gh` CLI** (GitHub's command-line tool) must be installed and authenticated. If you don't have Homebrew, you can install `gh` directly:
+
+```bash
+# Download and install (no Homebrew/sudo required)
+curl -sL https://github.com/cli/cli/releases/latest/download/gh_*_macOS_arm64.zip -o /tmp/gh.zip
+unzip -o /tmp/gh.zip -d /tmp/gh
+mkdir -p ~/bin
+cp /tmp/gh/*/bin/gh ~/bin/gh
+chmod +x ~/bin/gh
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.zshrc
+source ~/.zshrc
+
+# Authenticate with GitHub
+gh auth login
+```
+
+Verify with `gh auth status` — you should see your GitHub username and a valid token.
+
+### Where to put the skill files
+
+Cursor looks for skills in two places:
+
+| Location | Scope |
+|---|---|
+| `<project>/.cursor/skills/` | Only available in that one project |
+| `~/.cursor/skills-cursor/` | Available in **every** project you open |
+
+To avoid recreating skills for each new repo, install them at the user level:
+
+```
+~/.cursor/skills-cursor/
+├── commit/
+│   └── SKILL.md
+├── pr/
+│   └── SKILL.md
+└── deploy/
+    └── SKILL.md
+```
+
+### Skill 1: `/commit`
+
+Create `~/.cursor/skills-cursor/commit/SKILL.md`:
+
+```markdown
+---
+name: commit
+description: Stages changes, creates a conventional commit, and pushes to a feature branch. Use when the user invokes /commit or wants to commit and push changes.
+---
+
+# Commit and Push to Feature Branch
+
+When the user invokes `/commit`, stage all changes, create a conventional commit, and push to a **feature branch** (never directly to main).
+
+## Workflow
+
+1. **Check status:** Run `git status` to see what's changed.
+2. **Ensure you're on a feature branch:** Run `git branch --show-current`.
+   - If on `main`, create and switch to a feature branch: `git checkout -b feature/<short-description>`.
+   - If already on a feature branch, stay on it.
+3. **Stage changes:** Run `git add -A` to stage all changes.
+4. **Generate commit message:** Use conventional commits format (`feat:`, `fix:`, `chore:`, `docs:`, etc.). Infer from the diff with `git diff --cached`.
+5. **Commit:** Run `git commit -m "[message]"`
+6. **Push:** Run `git push -u origin $(git branch --show-current)`
+7. **Report:** Show the commit hash, message, and branch name. Remind the user to run `/pr`.
+```
+
+### Skill 2: `/pr`
+
+Create `~/.cursor/skills-cursor/pr/SKILL.md`:
+
+```markdown
+---
+name: pr
+description: Creates and submits a pull request for the current branch. Use when the user invokes /pr or wants to open a pull request.
+---
+
+# Create Pull Request
+
+When the user invokes `/pr`, create a pull request from the current feature branch against main.
+
+## Workflow
+
+1. **Ensure changes are committed and pushed.** If not, run the `/commit` workflow first.
+2. **Verify not on main.** If on `main`, tell the user to make changes on a feature branch first.
+3. **Check for existing PR:** Run `gh pr view --json url`.
+4. **Create PR:** `gh pr create --title "<title>" --body "<body>" --base main`
+5. **Report:** Share the PR URL. The user can review with `gh pr diff`, add comments with `gh pr comment`, or run `/deploy` when ready.
+```
+
+### Skill 3: `/deploy`
+
+Create `~/.cursor/skills-cursor/deploy/SKILL.md`:
+
+```markdown
+---
+name: deploy
+description: Merges the current PR to main and deploys. Use when the user invokes /deploy or wants to deploy changes to production.
+---
+
+# Deploy to Production
+
+When the user invokes `/deploy`, merge the current pull request into main.
+
+## Workflow
+
+1. **Find the PR:** Run `gh pr view --json number,title,state,url,mergeable`.
+2. **Verify checks pass:** Run `gh pr checks`.
+3. **Merge:** `gh pr merge --merge --delete-branch`
+4. **Switch to main:** `git checkout main && git pull origin main`
+5. **Report:** Confirm the merge, share the live URL (`https://<owner>.github.io/<repo>/`), and note that GitHub Pages takes ~1-3 minutes to rebuild.
+```
+
+### How the workflow looks in practice
+
+Once the skills are installed, the full cycle from any project is:
+
+```
+You: "Add a new checkout prototype"     →  Cursor builds it
+You: "/commit"                           →  feature branch created, committed, pushed
+You: "/pr"                               →  pull request opened on GitHub
+You: (review the PR diff)
+You: "/deploy"                           →  merged to main, site goes live
+```
+
+No manual git commands, no switching to the browser, no recreating workflows per repo.
+
+---
+
+## 12. Optional: Use as your root GitHub Pages site
 
 By default, project sites live at `https://<your-username>.github.io/<your-repo>/`. If you want your site at the shorter root URL:
 
@@ -285,7 +419,7 @@ Your site will then be served at the root domain, and your original project repo
 
 ---
 
-## 12. Workflow summary
+## 13. Workflow summary
 
 1. Create or clone a repo and open it in Cursor.
 2. Run `python3 -m http.server 8765` to preview locally.
