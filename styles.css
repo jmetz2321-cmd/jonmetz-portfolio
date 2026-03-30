@@ -199,6 +199,14 @@ html {
   background-clip: text;
 }
 
+/* Showcase flow images */
+.showcase-img {
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+  height: auto;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
