@@ -24,6 +24,37 @@
     }
   </script>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .ios-device-frame {
+      width: 180px;
+      height: 360px;
+      border-radius: 40px;
+      border: 12px solid #1c1b18;
+      box-shadow: 0 0 0 1px #333, inset 0 0 0 1px #444, 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .ios-device-frame::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 25px;
+      background: #1c1b18;
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
+    }
+
+    .ios-device-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
 </head>
 <body class="bg-surface-950 text-white font-sans antialiased">
 
@@ -233,6 +264,43 @@
               </div>
             </div>
             <img src="klarna_flow.png" alt="Klarna checkout flow on iPhone — checkout, payment options, confirmation, order confirmation" class="showcase-img w-full" loading="lazy">
+          </div>
+
+          <!-- Stryvur -->
+          <div class="reveal rounded-2xl border border-white/[0.07] overflow-hidden p-4 sm:p-6" style="background: rgba(255,255,255,0.015);">
+            <h3 class="text-stone-300 text-sm font-semibold mb-4">Stryvur — Founded and created an AI fitness coach iOS app available on the app store</h3>
+            <div class="grid sm:grid-cols-2 gap-4 mb-6">
+              <div>
+                <p class="text-xs text-stone-500 font-semibold uppercase tracking-wider mb-2">Problem</p>
+                <p class="text-sm text-stone-400 leading-relaxed">Professional fitness coaching costs $300-600/month and remains out of reach for most Americans. Only 33% of U.S. adults track deeper health indicators like sleep patterns or blood pressure. No single platform today unifies wearable health data, biomarker testing, personalized training, and nutrition coaching into one intelligent experience.</p>
+              </div>
+              <div>
+                <p class="text-xs text-stone-500 font-semibold uppercase tracking-wider mb-2">Features</p>
+                <p class="text-sm text-stone-400 leading-relaxed">Stryvur delivers AI-powered adaptive workout plans that adjust based on sleep quality, soreness, and heart rate. Syncs with Apple Health for seamless data integration while providing personalized nutrition guidance, daily check-ins, and gamification to drive consistency.</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-4 justify-start">
+              <!-- iOS Device Frame 1 -->
+              <div class="ios-device-frame">
+                <img src="stryvur_1_login.png" alt="Stryvur login screen with Sign in with Apple" class="w-full h-full object-cover" loading="lazy">
+              </div>
+              <!-- iOS Device Frame 2 -->
+              <div class="ios-device-frame">
+                <img src="stryvur_2_onboarding.png" alt="Stryvur Apple Health onboarding screen" class="w-full h-full object-cover" loading="lazy">
+              </div>
+              <!-- iOS Device Frame 3 -->
+              <div class="ios-device-frame">
+                <img src="stryvur_3_workouts.png" alt="Stryvur My Plan workouts tab" class="w-full h-full object-cover" loading="lazy">
+              </div>
+              <!-- iOS Device Frame 4 -->
+              <div class="ios-device-frame">
+                <img src="stryvur_4_nutrition.png" alt="Stryvur My Plan nutrition tab" class="w-full h-full object-cover" loading="lazy">
+              </div>
+              <!-- iOS Device Frame 5 -->
+              <div class="ios-device-frame">
+                <img src="stryvur_5_sleep.png" alt="Stryvur My Plan sleep tab" class="w-full h-full object-cover" loading="lazy">
+              </div>
+            </div>
           </div>
         </div>
       </div>
